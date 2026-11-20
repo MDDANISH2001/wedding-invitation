@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Palette from art-src/color-grading.png */
+  --color-ivory: #fdf6e3; /* page paper */
+  --color-cream: #fafad2; /* reverse text on deep backgrounds */
+  --color-lilac: #e6e6fa; /* lavender background */
+  --color-lilac-soft: #f1effb;
+  --color-lavender: #c7b4e3;
+  --color-lavender-rich: #800080; /* rich purple accent */
+  --color-plum: #5e3b67; /* muted plum, deepened for small text on ivory (AA+) */
+  --color-plum-deep: #4b0082; /* deep lavender: headings */
+  --color-gold: #b8860b; /* golden bronze: accents, large text */
+  --color-gold-deep: #7a5300; /* bronze for small text on ivory (AA+) */
+  --color-gold-light: #e9c46a;
+
+  --font-serif: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-script: 'Great Vibes', 'Snell Roundhand', 'Apple Chancery', cursive;
+  --font-child: 'Gochi Hand', 'Comic Sans MS', 'Chalkboard SE', cursive;
+  --font-arabic: 'Amiri', 'Noto Naskh Arabic', 'Geeza Pro', 'Traditional Arabic', serif;
+  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Amiri', serif;
+
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Textures (tiny inline SVG tiles, rasterised once by the browser) ── */
+:root {
+  /* 8-point star girih lattice for the lavender "table" behind each page */
+  --tex-girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%234B0082' stroke-opacity='.09' stroke-width='.8'%3E%3Cpath d='M16 16h24v24H16z'/%3E%3Cpath d='M28 11l17 17-17 17-17-17z'/%3E%3Cpath d='M28 0v11M28 45v11M0 28h11M45 28h11'/%3E%3Cpath d='M0 0l16 16M56 0L40 16M0 56l16-16M56 56L40 40'/%3E%3C/g%3E%3Ccircle cx='28' cy='28' r='2.2' fill='%23fdf6e3' fill-opacity='.35'/%3E%3C/svg%3E");
+  /* Fine paper grain */
+  --tex-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .24 .5 0 0 0 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  /* Soft cloudy wash for parchment depth */
+  --tex-wash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .58 0 0 0 0 .44 0 0 0 0 .62 .6 0 0 0 -.22'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    background: #e6e6fa;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-plum);
+    background-color: #e6e6fa;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: lining-nums;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-lilac);
+    color: var(--color-plum-deep);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-plum);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* The lavender "table" each invitation page rests on */
+  .table-surface {
+    background-color: #e6e6fa;
+    background-image: var(--tex-girih), radial-gradient(120% 80% at 50% 0%, #efedfb 0%, #e2dcf5 60%, #d3c6ee 100%);
+  }
+
+  /* An ivory invitation sheet */
+  .paper {
+    background-color: var(--color-ivory);
+    background-image:
+      var(--tex-paper),
+      var(--tex-wash),
+      radial-gradient(130% 100% at 50% 40%, transparent 55%, rgba(128, 0, 128, 0.07) 100%),
+      linear-gradient(180deg, #fffaf0 0%, #fbf2dc 100%);
+  }
+
+  /* Golden-bronze lettering with a slow travelling sheen */
+  .gold-text {
+    color: var(--color-gold);
+    background: linear-gradient(100deg, #6e4a00 0%, #96690a 32%, #c99a2e 46%, #96690a 60%, #6e4a00 100%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .anim-sheen { animation: sheen 6s ease-in-out infinite; }
+
+  .urdu {
+    font-family: var(--font-urdu);
+    line-height: 2.1;
+  }
+  .arabic {
+    font-family: var(--font-arabic);
+  }
+
+  .caps {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  .ink-shadow {
+    text-shadow: 0 1px 0 rgba(255, 249, 241, 0.6);
+  }
+}
+
+/* ── Ambient loops (CSS keeps them on the compositor) ── */
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.2deg); }
+  50% { transform: rotate(2.2deg); }
+}
+@keyframes breathe {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(1.4deg) scale(1.012); }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.75; }
+  45% { opacity: 1; }
+  70% { opacity: 0.85; }
+}
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(6px, -4px, 0); }
+}
+@keyframes sheen {
+  0%, 15% { background-position: 100% 0; }
+  60%, 100% { background-position: 0% 0; }
+}
+@keyframes halo {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.anim-sway { animation: sway 6s ease-in-out infinite; transform-origin: 50% 0; }
+.anim-breathe { animation: breathe 9s ease-in-out infinite; }
+.anim-glow { animation: glow 3.2s ease-in-out infinite; }
+.anim-drift { animation: drift 14s ease-in-out infinite; }
+.anim-cue { animation: cue 2.4s ease-in-out infinite; }
+.anim-halo { animation: halo 4.5s ease-in-out infinite; }
+/* a toddler's bouncy speech bubble */
+@keyframes wiggle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-3px) rotate(-1.5deg); }
+  40% { transform: translateY(0) rotate(1.2deg); }
+  60% { transform: translateY(-2px) rotate(-0.6deg); }
+}
+.anim-wiggle { animation: wiggle 3.6s ease-in-out infinite; }
+.font-child { font-family: var(--font-child); }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-sway, .anim-breathe, .anim-glow, .anim-drift, .anim-cue, .anim-sheen, .anim-halo, .anim-wiggle {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto !important; }
+}
