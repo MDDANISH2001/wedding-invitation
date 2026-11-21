@@ -1,8 +1,9 @@
 import { fxConfig } from '../config/env'
 
 /**
- * Pre-rendered sprites for the canvas effects. Drawing a cached bitmap is far
- * cheaper than building gradients/paths per particle per frame.
+ * Petal artwork: one small SVG per tint, encoded as a data URL. Each petal
+ * element uses it as a background, so the browser rasterises it once and
+ * the GPU only moves the finished bitmap around.
  */
 
 /** Built-in petal colours (VITE_PETAL_COLOR). Each is [light, mid, edge] tints. */
@@ -62,64 +63,28 @@ function petalTints(spec: string): [string, string, string][] {
   return out.length ? out : PETAL_PRESETS.lavender
 }
 
-function canvas(w: number, h: number) {
-  const c = document.createElement('canvas')
-  c.width = w
-  c.height = h
-  return c
-}
-
-/** Teardrop petals in the configured colour(s) (64×64, centred). */
-export function makePetals(): HTMLCanvasElement[] {
-  return petalTints(fxConfig.petalColor).map(([light, mid, edge]) => {
-    const c = canvas(64, 64)
-    const g = c.getContext('2d')!
-    g.translate(32, 32)
-    g.beginPath()
-    g.moveTo(0, -28)
-    g.bezierCurveTo(20, -18, 22, 12, 0, 28)
-    g.bezierCurveTo(-22, 12, -20, -18, 0, -28)
-    const grad = g.createRadialGradient(-4, -6, 2, 0, 0, 30)
-    grad.addColorStop(0, light)
-    grad.addColorStop(0.55, mid)
-    grad.addColorStop(1, edge)
-    g.fillStyle = grad
-    g.fill()
-    // centre vein
-    g.strokeStyle = 'rgba(255,255,255,0.45)'
-    g.lineWidth = 1.4
-    g.beginPath()
-    g.moveTo(0, -20)
-    g.quadraticCurveTo(3, 0, 0, 22)
-    g.stroke()
-    return c
-  })
-}
-
-/** Soft round glow (for lanterns, sparks, ripples). */
-export function makeGlow(rgb: string, size = 128): HTMLCanvasElement {
-  const c = canvas(size, size)
-  const g = c.getContext('2d')!
-  const r = size / 2
-  const grad = g.createRadialGradient(r, r, 0, r, r, r)
-  grad.addColorStop(0, `rgba(${rgb},1)`)
-  grad.addColorStop(0.25, `rgba(${rgb},0.55)`)
-  grad.addColorStop(0.6, `rgba(${rgb},0.14)`)
-  grad.addColorStop(1, `rgba(${rgb},0)`)
-  g.fillStyle = grad
-  g.fillRect(0, 0, size, size)
-  return c
-}
-
-/** Load an image; resolves even on error (effects simply skip missing sprites). */
-export function loadImage(src: string): Promise<HTMLImageElement | null> {
-  return new Promise((res) => {
-    const img = new Image()
-    img.decoding = 'async'
-    img.onload = () => res(img)
-    img.onerror = () => res(null)
-    img.src = src
+/** Teardrop petals (SVG data URLs) in the configured colour(s). */
+export function petalUrls(): string[] {
+  return petalTints(fxConfig.petalColor).map(([light, mid, edge], i) => {
+    const svg =
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 64 64">` +
+      `<defs><radialGradient id="p${i}" gradientUnits="userSpaceOnUse" cx="-4" cy="-6" r="32" fx="-4" fy="-6">` +
+      `<stop offset="0.06" stop-color="${light}"/><stop offset="0.55" stop-color="${mid}"/><stop offset="1" stop-color="${edge}"/>` +
+      `</radialGradient></defs>` +
+      `<path d="M0-28C20-18 22 12 0 28C-22 12-20-18 0-28Z" fill="url(#p${i})"/>` +
+      `<path d="M0-20Q3 0 0 22" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.4"/>` +
+      `</svg>`
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
   })
 }
 
 export const rand = (a: number, b: number) => a + Math.random() * (b - a)
+export const pick = <T>(xs: T[]) => xs[(Math.random() * xs.length) | 0]
+
+/** A positioned, non-interactive element for an effect layer. */
+export function el(css: string, html = ''): HTMLDivElement {
+  const d = document.createElement('div')
+  d.style.cssText = `position:absolute;left:0;top:0;pointer-events:none;${css}`
+  if (html) d.innerHTML = html
+  return d
+}

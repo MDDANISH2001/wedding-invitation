@@ -66,12 +66,12 @@ What each touch effect does:
 - **ripple**: rings of golden and lavender light.
 - **mehndi**: a henna-style ink trail with self-drawing curls and dots.
 
-How they're built:
-- Everything runs on one `<canvas>` (`src/fx/`) with no extra libraries; the effects code is about 4 KB gzipped.
-- The canvas pixel ratio is capped at 1.5 on phones.
-- The render loop sleeps when idle or when the tab is hidden.
+How they're built (`src/fx/`):
+- There's no canvas, WebGL or Three.js, and no per-frame JavaScript. Every petal, lantern, spark and ring is a small element animated once with the Web Animations API, using only `transform` and `opacity`. The browser runs those on the GPU compositor, so they stay smooth while the page scrolls, loads fonts or runs React, and they can't freeze.
+- Each falling petal has three layers (fall, sway, tumble) with a real 3-D flip. Petal art is a tiny SVG in the chosen colour.
+- Touch particles remove themselves when they finish, and at most 240 exist at once.
+- The ambient layer leans slightly with the mouse on desktop and with phone tilt on Android.
 - The whole layer is skipped for guests who prefer reduced motion.
-- Lanterns respond to phone tilt on Android and to the mouse on desktop.
 
 ## Artwork
 
@@ -94,7 +94,7 @@ yarn art path/to/upscaled-sheet.png
 ```
 src/config/wedding.ts       all content
 src/config/env.ts           typed .env effect settings
-src/fx/                     canvas ambience + touch effects
+src/fx/                     ambience + touch effects (compositor-driven DOM, no canvas)
 src/components/layout/      EnvelopeGate, InvitationBook (sticky page stack), Sheet, PageNav
 src/components/sections/    InvitationHero, WeddingEvents, EventInvitationCard, WeddingCountdown, ClosingInvitation
 src/components/art/         ArtImage, frames (arched card, cusp frame), florals, lanterns, dividers
