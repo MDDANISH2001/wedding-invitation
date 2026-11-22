@@ -222,17 +222,20 @@ export default function NoorExperience() {
 function Crescent() {
   // a five-point star, centred on 0,0
   const star = Array.from({ length: 10 }, (_, i) => {
-    const r = i % 2 ? 4.4 : 11
-    const a = -Math.PI / 2 + (i * Math.PI) / 5
-    return `${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)}`
-  }).join(" L")
+    const r = i % 2 ? 4.4 : 11;
+    const a = -Math.PI / 2 + (i * Math.PI) / 5;
+    return `${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)}`;
+  }).join(" L");
   return (
     <span
       className="noor-orb relative block h-[clamp(124px,35vw,168px)] w-[clamp(124px,35vw,168px)]"
       aria-hidden="true"
     >
       <span className="absolute inset-[-30%] rounded-full bg-[radial-gradient(circle,rgba(255,214,140,0.4)_0%,rgba(255,180,80,0.12)_40%,transparent_68%)]" />
-      <svg viewBox="-60 -60 120 120" className="absolute inset-0 overflow-visible">
+      <svg
+        viewBox="-60 -60 120 120"
+        className="absolute inset-0 overflow-visible"
+      >
         <defs>
           {/* the bite taken out of the full disc: offset up and to the right, so the horns open that way */}
           <mask id="noor-bite">
@@ -264,18 +267,39 @@ function Crescent() {
         </defs>
 
         {/* the rest of the moon, faintly lit (earthshine) */}
-        <circle r="46" fill="#f1cf85" opacity=".05" />
+        {/* <circle r="46" fill="#f1cf85" opacity=".01" /> */}
         <g mask="url(#noor-bite)" filter="url(#noor-glow)">
           <circle r="46" fill="url(#noor-moon)" />
           {/* a dark outer edge and a bright inner rim give it body */}
-          <circle r="45" fill="none" stroke="#5a3408" strokeOpacity=".45" strokeWidth="2" />
-          <circle cx="17" cy="-11" r="39.2" fill="none" stroke="#fff6da" strokeOpacity=".85" strokeWidth="1.2" clipPath="url(#noor-disc)" />
+          <circle
+            r="45"
+            fill="none"
+            stroke="#5a3408"
+            strokeOpacity=".45"
+            strokeWidth="2"
+          />
+          <circle
+            cx="17"
+            cy="-11"
+            r="39.2"
+            fill="none"
+            stroke="#fff6da"
+            strokeOpacity=".85"
+            strokeWidth="1.2"
+            clipPath="url(#noor-disc)"
+          />
         </g>
 
         <g transform="translate(23 -15) rotate(12)">
-          <circle r="13" fill="#fff0c4" opacity=".18" />
+          <circle r="13" fill="#fff0c4" opacity=".01" />
           <g className="noor-twinkle">
-            <path d={`M${star} Z`} fill="url(#noor-star)" stroke="#fff8e2" strokeWidth=".6" filter="url(#noor-glow)" />
+            <path
+              d={`M${star} Z`}
+              fill="url(#noor-star)"
+              stroke="#fff8e2"
+              strokeWidth=".6"
+              filter="url(#noor-glow)"
+            />
           </g>
         </g>
       </svg>
