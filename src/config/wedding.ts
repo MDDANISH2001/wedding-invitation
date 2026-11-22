@@ -125,7 +125,7 @@ const content = {
       venueName: "Saifi Marriage Home",
       venueAddress: "Khanna Nagar, Main Delhi–Saharanpur Road, Loni",
       // TODO: paste the Google Maps link here when the location is final
-      mapsUrl: "",
+      mapsUrl: "https://maps.app.goo.gl/1fr65DapnMyRPrSs9?g_st=aw",
       showDirections: true,
       ornament: "lantern",
       // Umm al-Qura date; adjust by a day if the local moon sighting differs
@@ -142,7 +142,7 @@ const content = {
       venueName: "Hina Marriage Home",
       venueAddress: "52-Peer, Prem Nagar, Loni",
       // TODO: paste the Google Maps link here
-      mapsUrl: "",
+      mapsUrl: "https://maps.app.goo.gl/dxrABLqTymzkhNmr8?g_st=aw",
       showDirections: true,
       ornament: "floral",
       hijri: "26 Jumada al-Akhirah 1448",
