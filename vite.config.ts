@@ -102,7 +102,8 @@ function walimaPage(env: Record<string, string>): Plugin {
   const couple = `${name("groom")} weds ${name("bride")}`;
   const meta = (html: string, key: string, value: string) =>
     html.replace(
-      new RegExp(`(<meta (?:property|name)="${key}" content=")[^"]*(")`),
+      // tolerant of a formatter splitting the tag over several lines
+      new RegExp(`(<meta\\s+(?:property|name)="${key}"\\s+content=")[^"]*(")`),
       `$1${esc(value)}$2`,
     );
 

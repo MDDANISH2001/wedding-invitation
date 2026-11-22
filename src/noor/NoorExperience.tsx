@@ -52,11 +52,11 @@ export default function NoorExperience() {
   }, [idx, scenes.length]);
 
   // advance on its own
-  // useEffect(() => {
-  //   if (phase !== "film") return;
-  //   const t = window.setTimeout(next, scenes[idx].dur);
-  //   return () => window.clearTimeout(t);
-  // }, [phase, idx, next, scenes]);
+  useEffect(() => {
+    if (phase !== "film") return;
+    const t = window.setTimeout(next, scenes[idx].dur);
+    return () => window.clearTimeout(t);
+  }, [phase, idx, next, scenes]);
 
   // a breath of sparks as each scene begins
   useEffect(() => {
@@ -170,7 +170,7 @@ export default function NoorExperience() {
             {/* a tap anywhere moves on */}
             <div
               className="absolute inset-0 cursor-pointer"
-              onClick={next}
+              // onClick={next}
               aria-live="polite"
             >
               <AnimatePresence mode="wait">
