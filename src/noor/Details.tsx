@@ -376,10 +376,10 @@ export function Details({ onReplay }: { onReplay: () => void }) {
         >
           <RotateCcw size={16} /> {noor.replay}
         </button>
-        <p className="max-w-[26em] text-[11px] leading-snug text-[#f6e7c6]/45">
+        {/* <p className="max-w-[26em] text-[11px] leading-snug text-[#f6e7c6]/45">
           Background photograph: “Qur'an and Rehal” by Sayyed Shahab-o-Din
           Vajedi, CC BY 4.0, via Wikimedia Commons (blurred and colour-graded).
-        </p>
+        </p> */}
       </div>
     </main>
   );
