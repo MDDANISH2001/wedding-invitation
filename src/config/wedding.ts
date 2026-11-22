@@ -113,7 +113,7 @@ const content = {
   events: [
     {
       id: "baraat",
-      title: "Baraat & Nikah",
+      title: "Program In-sha-Allah",
       shortTitle: "Nikah",
       titleUrdu: "بارات و نکاح",
       subtitle: "Nikah Ceremony",
@@ -205,7 +205,7 @@ const content = {
   /** A little one's invitation, written the way a toddler says it. Empty text hides it. */
   childNote: {
     text: "Mele Mamu ki chhadi me jalool jalool aana!",
-    from: "— Arham Khan",
+    from: "Arham Khan",
   },
 
   /** Words on the envelope (3D envelope; the label follows the view). */

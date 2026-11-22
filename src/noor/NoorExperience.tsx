@@ -52,11 +52,11 @@ export default function NoorExperience() {
   }, [idx, scenes.length]);
 
   // advance on its own
-  useEffect(() => {
-    if (phase !== "film") return;
-    const t = window.setTimeout(next, scenes[idx].dur);
-    return () => window.clearTimeout(t);
-  }, [phase, idx, next, scenes]);
+  // useEffect(() => {
+  //   if (phase !== "film") return;
+  //   const t = window.setTimeout(next, scenes[idx].dur);
+  //   return () => window.clearTimeout(t);
+  // }, [phase, idx, next, scenes]);
 
   // a breath of sparks as each scene begins
   useEffect(() => {

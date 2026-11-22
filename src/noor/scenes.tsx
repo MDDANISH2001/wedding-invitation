@@ -117,7 +117,7 @@ export function buildScenes(): Scene[] {
         <>
           <TajWindow
             at={0}
-            className="mx-auto -mt-[6vh] mb-2 w-[min(92vw,460px)]"
+            className="mx-auto -mt-[18vh] mb-2 w-[min(92vw,460px)]"
           />
           {/* a soft pool of shadow under the names, so the gold reads clearly against the picture's glow */}
           <div className="noor-namebed relative">
@@ -125,19 +125,19 @@ export function buildScenes(): Scene[] {
               text={groom.name}
               at={0.9}
               stagger={0.06}
-              className="noor-bright font-pinyon text-[clamp(48px,13.6vw,78px)] leading-[1.3]"
+              className="noor-bright tracking-wide font-pinyon text-[clamp(48px,13.6vw,78px)] leading-none"
             />
-            <Thread at={1.6} className="mx-auto my-0.5 w-[min(80vw,340px)]" />
+            <Thread at={1.6} className="mx-auto w-[min(80vw,340px)]" />
             <FadeLine
               text={wedding.weds}
               at={2}
-              className="font-pinyon -mt-3 text-[clamp(26px,7.4vw,36px)]"
+              className="font-pinyon -mt-5 text-[clamp(26px,7.4vw,36px)]"
             />
             <GoldLine
               text={bride.name}
               at={2.3}
               stagger={0.06}
-              className="noor-bright font-pinyon text-[clamp(48px,13.6vw,78px)] leading-[1.3]"
+              className="noor-bright tracking-wide font-pinyon text-[clamp(48px,13.6vw,78px)] leading-none"
             />
           </div>
         </>

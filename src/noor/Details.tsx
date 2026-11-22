@@ -52,8 +52,10 @@ function Heading({ children, urdu }: { children: ReactNode; urdu?: string }) {
           {urdu}
         </span>
       )}
-      <h2 className="font-display noor-emboss text-[clamp(24px,6.6vw,32px)] font-bold leading-tight">
-        <span className="noor-gold">{children}</span>
+      <h2
+        className={`font-display noor-emboss text-[clamp(24px,6.6vw,32px)] font-bold leading-tight`}
+      >
+        <span className={`noor-gold`}>{children}</span>
       </h2>
       <span
         aria-hidden="true"
@@ -67,7 +69,11 @@ function EventPanel({ ev }: { ev: WeddingEvent }) {
   const d = dateParts(ev.start);
   return (
     <Rise className="noor-panel rounded-[28px] px-5 py-7 text-center">
-      <Heading urdu={ev.titleUrdu}>{ev.title}</Heading>
+      <Heading urdu={ev.titleUrdu}>
+        {ev.title.split(" ")[0]}
+        <br />
+        {ev.title.split(" ")[1]}
+      </Heading>
       <p className="font-cinzel text-[19px] font-bold tracking-wide text-[#f8dc98]">
         {d.weekday}, {d.dayNumber} {d.month} {d.year}
       </p>
@@ -323,7 +329,7 @@ export function Details({ onReplay }: { onReplay: () => void }) {
           <p className="font-child text-[22px] leading-snug text-[#fff1cc]">
             “{childNote.text}”
           </p>
-          <p className="font-child mt-1 text-[18px] text-[#f8dc98]">
+          <p className="font-child mt-1 text-2xl uppercase! text-[#f8dc98]">
             {childNote.from}
           </p>
         </Rise>
