@@ -230,8 +230,9 @@ export function Details({ onReplay }: { onReplay: () => void }) {
         <p className="font-cinzel mt-3 text-balance text-[12.5px] font-semibold tracking-[0.2em] uppercase">
           {noor.blessing}
         </p>
-        <p className="font-display noor-emboss mt-2 text-[clamp(26px,7vw,34px)] font-bold">
+        <p className="font-display noor-emboss mt-2 flex flex-col text-[clamp(26px,7vw,34px)] font-bold">
           <span className="noor-gold">{wedding.hosts.names}</span>
+          <span className="white text-sm">{wedding.hosts.father}</span>
         </p>
         <p className="mt-2 max-w-[22em] text-[18px] italic leading-snug">
           {wedding.hosts.request}

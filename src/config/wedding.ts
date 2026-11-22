@@ -75,6 +75,7 @@ const content = {
 
   hosts: {
     names: "MD Mynuddin",
+    father: "S/o Marhoom Shabir Ahamad",
     request:
       "request the honour of your presence and blessings on the auspicious occasion of the Nikah of their beloved son",
   },
