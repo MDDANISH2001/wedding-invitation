@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { artUrl } from '../../lib/art'
+import { IS_CLASSIC } from '../../config/env'
+import { jaaliBandUrl } from '../art/mughalGeometry'
 
 interface Props {
   children: ReactNode
@@ -10,7 +12,8 @@ interface Props {
 
 const strip = (name: 'band-x' | 'band-y', extra: CSSProperties): CSSProperties => ({
   position: 'absolute',
-  backgroundImage: `url(${artUrl(name)})`,
+  // new themes: a crisp vector jaali band instead of the sheet's raster one
+  backgroundImage: IS_CLASSIC ? `url(${artUrl(name)})` : jaaliBandUrl(name === 'band-y'),
   ...extra,
 })
 
@@ -25,7 +28,7 @@ export function Sheet({ children, className = '', band = true }: Props) {
       <div
         className={`paper relative mx-auto flex w-full max-w-[1180px] flex-col overflow-hidden rounded-[3px] shadow-[0_22px_50px_-24px_rgba(52,30,70,0.55),0_2px_6px_-2px_rgba(52,30,70,0.25)] [--band:22px] sm:[--band:28px] ${className}`}
       >
-        <div aria-hidden="true" className="pointer-events-none absolute inset-[5px] border border-plum/40" />
+        <div aria-hidden="true" className={`pointer-events-none absolute inset-[5px] border ${IS_CLASSIC ? 'border-plum/40' : 'border-gold/70'}`} />
         {band && (
           <div aria-hidden="true" className="pointer-events-none absolute inset-[9px]">
             <div style={strip('band-x', { top: 0, left: 0, right: 0, height: B, backgroundSize: 'auto 100%', backgroundRepeat: 'repeat-x' })} />

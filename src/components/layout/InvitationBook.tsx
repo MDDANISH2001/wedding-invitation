@@ -162,7 +162,7 @@ function BookPage({ def, index, isLast, scrollY, top, nextTop, height, vh, setRe
         </PageContext.Provider>
       </motion.div>
       {!reduce && !isLast && (
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-plum-deep" style={{ opacity: shade }} />
+        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-shade" style={{ opacity: shade }} />
       )}
     </section>
   )

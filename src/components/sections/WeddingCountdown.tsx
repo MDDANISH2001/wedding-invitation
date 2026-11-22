@@ -31,7 +31,7 @@ export function WeddingCountdown() {
 
   return (
     <motion.div className="flex flex-col items-center" {...reveal(0.2)}>
-      <p className="caps text-sm font-bold tracking-[0.14em] text-black/80">Counting down to {label}</p>
+      <p className="caps text-sm font-bold tracking-[0.14em] text-ink/80">Counting down to {label}</p>
       <div
         role="timer"
         aria-label={`${t.days} days, ${t.hours} hours and ${t.minutes} minutes until ${label}`}

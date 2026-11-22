@@ -1,8 +1,10 @@
-import { wedding, type Person } from "../../config/wedding";
+import { GUEST, wedding, type Person } from "../../config/wedding";
 import { dateParts } from "../../lib/date";
 import { InvitationCardFrame } from "../art/frames";
 import { ArtImage } from "../art/ArtImage";
 import { DecorativeDivider } from "../art/DecorativeDivider";
+import { ThemeArt } from "../art/ThemeArt";
+import { IS_CLASSIC, fxConfig } from "../../config/env";
 
 /** Card width; shared by the page and the envelope's flying copy so both lay out identically. */
 export const HERO_CARD_WIDTH = "min(96vw, 500px)";
@@ -32,7 +34,7 @@ export function HeroCard() {
           {bismillah.arabic}
         </p>
       </div>
-      <p className="caps text-[clamp(10.5px,2.9vw,12px)] tracking-normal text-lg! leading-loose font-bold text-black">
+      <p className="caps text-[clamp(10.5px,2.9vw,12px)] tracking-normal text-lg! leading-loose font-bold text-ink">
         {bismillah.transliteration}
       </p>
       <p className="mt-0.5 font-serif text-[clamp(14px,3.9vw,16px)] text-xl! font-semibold leading-none italic text-plum">
@@ -46,6 +48,11 @@ export function HeroCard() {
         className="mt-2 w-[min(80%,250px)]"
       />
 
+      {fxConfig.guestName && GUEST && (
+        <p className="mt-2 font-script text-[clamp(26px,7vw,32px)] font-semibold leading-tight tracking-wide text-lavender-rich">
+          {wedding.envelope.greeting} {GUEST},
+        </p>
+      )}
       <p className="mt-2 font-serif text-[clamp(21px,5.8vw,25px)] font-semibold italic leading-tight text-plum-deep">
         {hosts.names}
       </p>
@@ -56,11 +63,15 @@ export function HeroCard() {
       <h1 className="mt-5 flex flex-col items-center">
         <PersonBlock person={groom} />
         <span className="my-1 flex flex-col items-center">
-          <ArtImage
-            name="hands"
-            priority
-            className="h-auto w-[clamp(64px,19vw,92px)]"
-          />
+          {IS_CLASSIC ? (
+            <ArtImage
+              name="hands"
+              priority
+              className="h-auto w-[clamp(64px,19vw,92px)]"
+            />
+          ) : (
+            <ThemeArt name="sprig" priority className="h-auto w-[clamp(150px,46vw,220px)]" />
+          )}
           <span className="font-script text-[clamp(28px,7.6vw,36px)] leading-none text-lavender-rich">
             {wedding.weds}
           </span>

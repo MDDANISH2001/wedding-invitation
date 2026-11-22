@@ -8,6 +8,8 @@ import { FloralDecoration } from '../art/FloralDecoration'
 import { LanternDecoration } from '../art/LanternDecoration'
 import { EventInvitationCard } from './EventInvitationCard'
 import { WeddingCountdown } from './WeddingCountdown'
+import { IS_CLASSIC } from '../../config/env'
+import { MosqueSvg, SaveDateSeal } from '../art/mughal'
 
 /** Page 2: the mosque at dusk, the programme heading, countdown and both events. */
 export function WeddingEvents() {
@@ -30,7 +32,11 @@ export function WeddingEvents() {
       <div className="relative mx-auto w-full max-w-5xl px-11 pb-24 pt-10 sm:px-14 md:pt-12">
         <header className="flex flex-col items-center text-center">
           <motion.div className="w-[min(100%,500px)]" style={reduce ? undefined : { y: yScene }}>
-            <ArtImage name="mosque" alt="Watercolour of a Mughal mosque in lavender, with gardens" className="h-auto w-full" />
+            {IS_CLASSIC ? (
+              <ArtImage name="mosque" alt="Watercolour of a Mughal mosque in lavender, with gardens" className="h-auto w-full" />
+            ) : (
+              <MosqueSvg className="h-auto w-full drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)]" />
+            )}
           </motion.div>
           <motion.p lang="ur" dir="rtl" className="urdu mt-1 text-[clamp(26px,7vw,34px)] text-gold-deep" style={{ lineHeight: 1.8 }} {...reveal(0)}>
             {programme.headingUrdu}
@@ -53,7 +59,11 @@ export function WeddingEvents() {
           </motion.p>
           <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
             <motion.div className="w-[116px] shrink-0" {...reveal(0.35, 10)}>
-              <ArtImage name="seal-save-date" alt="Save the date" className="h-auto w-full" />
+              {IS_CLASSIC ? (
+                <ArtImage name="seal-save-date" alt="Save the date" className="h-auto w-full" />
+              ) : (
+                <SaveDateSeal className="h-auto w-full drop-shadow-[0_6px_10px_rgba(0,0,0,0.3)]" />
+              )}
             </motion.div>
             <WeddingCountdown />
           </div>

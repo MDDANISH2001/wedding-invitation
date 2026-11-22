@@ -10,6 +10,7 @@ import { VIEW, wedding } from "../../config/wedding";
 import { fxConfig } from "../../config/env";
 import { artUrl } from "../../lib/art";
 import { EASE_SILK } from "../../lib/motion";
+import { onOpenGesture } from "../../lib/opening";
 import { ArtImage } from "../art/ArtImage";
 import { HERO_CARD_WIDTH, HeroCard } from "../sections/HeroCard";
 
@@ -196,6 +197,7 @@ export function EnvelopeGate({ onLanded }: Props) {
 
   const open = () => {
     if (phase !== "idle") return;
+    onOpenGesture();
     if (reduce || !geo) {
       setPhase("flying");
       window.setTimeout(onLanded, 450);
@@ -238,7 +240,7 @@ export function EnvelopeGate({ onLanded }: Props) {
     duration: reduce ? 0.3 : duration,
     ease: EASE_SILK,
   });
-  const label = VIEW === "walima" ? "Dawate-e-Walima" : "Dawate-e-Nikah";
+  const label = VIEW === "walima" ? "Dawate-e-Walima" : "Dawat-e-Nikah";
 
   return (
     <div

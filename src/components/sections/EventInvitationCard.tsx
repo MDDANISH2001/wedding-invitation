@@ -1,5 +1,7 @@
 import { m as motion, useReducedMotion } from 'motion/react'
-import { MapPin, Navigation } from 'lucide-react'
+import { CalendarPlus, MapPin, Navigation } from 'lucide-react'
+import { fxConfig } from '../../config/env'
+import { googleCalendarUrl, icsUrl } from '../../lib/calendar'
 import type { WeddingEvent } from '../../config/wedding'
 import { dateParts, longDate } from '../../lib/date'
 import { EASE_SILK, inkReveal, reveal } from '../../lib/motion'
@@ -56,7 +58,7 @@ export function EventInvitationCard({ event, index }: { event: WeddingEvent; ind
         >
           {event.title}
         </motion.h3>
-        <motion.p className="caps mt-1 text-sm font-bold text-black/80" {...reveal(base + 0.35)}>
+        <motion.p className="caps mt-1 text-sm font-bold text-ink/80" {...reveal(base + 0.35)}>
           {event.subtitle}
         </motion.p>
 
@@ -101,20 +103,41 @@ export function EventInvitationCard({ event, index }: { event: WeddingEvent; ind
                 href={event.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${btn} group/btn bg-plum-deep text-cream transition-colors duration-300 hover:bg-lavender-rich`}
+                className={`${btn} group/btn bg-btn text-btn-ink transition-colors duration-300 hover:bg-btn-hover`}
               >
                 <Navigation aria-hidden="true" className="h-4 w-4 transition-transform duration-300 group-hover/btn:rotate-12" strokeWidth={2} />
                 Get directions
               </a>
             ) : (
               <>
-                <span aria-disabled="true" className={`${btn} cursor-default bg-plum-deep/55 text-cream`}>
+                <span aria-disabled="true" className={`${btn} cursor-default bg-btn/55 text-btn-ink`}>
                   <Navigation aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
                   Get directions
                 </span>
                 <span className="mt-1.5 font-serif text-[15px] font-semibold italic text-plum">Location link coming soon</span>
               </>
             )}
+          </motion.div>
+        )}
+
+        {fxConfig.calendar && (
+          <motion.div className="mt-4 flex flex-col items-center" {...reveal(base + 0.9)}>
+            <a
+              href={googleCalendarUrl(event)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="caps inline-flex min-h-11 items-center gap-2 rounded-full border border-plum-deep/40 px-5 text-[13px] font-bold text-plum-deep transition-colors duration-300 hover:bg-btn hover:text-btn-ink"
+            >
+              <CalendarPlus aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+              Add to calendar
+            </a>
+            <a
+              href={icsUrl(event)}
+              download={`${event.id}.ics`}
+              className="mt-1.5 font-serif text-[15px] font-semibold italic text-plum underline decoration-gold/60 underline-offset-4"
+            >
+              Apple / Outlook calendar
+            </a>
           </motion.div>
         )}
       </div>

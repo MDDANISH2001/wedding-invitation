@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/walima", "destination": "/walima/index.html" },
+    { "source": "/walima/", "destination": "/walima/index.html" }
+  ]
+}

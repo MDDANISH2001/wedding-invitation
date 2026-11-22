@@ -38,7 +38,7 @@ export function PageNav({ pages, active, onSelect }: Props) {
                   }`}
                 />
               </button>
-              <span className="pointer-events-none absolute right-full top-1/2 mr-2 hidden -translate-y-1/2 whitespace-nowrap rounded-sm bg-plum-deep/90 px-2 py-0.5 font-serif text-sm text-ivory opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
+              <span className="pointer-events-none absolute right-full top-1/2 mr-2 hidden -translate-y-1/2 whitespace-nowrap rounded-sm bg-btn/90 px-2 py-0.5 font-serif text-sm text-btn-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
                 {p.label}
               </span>
             </li>

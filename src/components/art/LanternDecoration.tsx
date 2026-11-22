@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react'
 import { ArtImage } from './ArtImage'
+import { IS_CLASSIC } from '../../config/env'
+import { LanternSvg } from './mughal'
 
 type Kind = 'lantern-grand' | 'lantern-small' | 'lantern-globe' | 'lantern-hex' | 'lantern-chain'
 
@@ -28,6 +30,9 @@ export function LanternDecoration({ kind = 'lantern-small', chain = 40, classNam
           style={{ height: chain, background: 'repeating-linear-gradient(180deg, #a07a2c 0 4px, #e9c46a 4px 6px, #7d5c17 6px 8px)' }}
         />
       )}
+      {!IS_CLASSIC ? (
+        <LanternSvg className="w-full" delay={delay} />
+      ) : (
       <div className="relative w-full">
         <span
           className="anim-glow absolute left-1/2 top-[62%] aspect-square w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -35,6 +40,7 @@ export function LanternDecoration({ kind = 'lantern-small', chain = 40, classNam
         />
         <ArtImage name={kind} className="relative block h-auto w-full" />
       </div>
+      )}
     </div>
   )
 }

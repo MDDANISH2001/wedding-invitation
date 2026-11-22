@@ -5,16 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/og-image.mjs && node scripts/og-image.mjs walima && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "art": "node scripts/extract-art.mjs"
+    "art": "node scripts/extract-art.mjs",
+    "theme-art": "node scripts/theme-art.mjs",
+    "og": "node scripts/og-image.mjs && node scripts/og-image.mjs walima",
+    "noor-art": "node scripts/noor-art.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.73.0",
     "motion": "^14.14.0",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "three": "0.187.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -22,6 +26,7 @@
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "0.187.0",
     "@vitejs/plugin-react": "^6.1.2",
     "eslint": "^10.14.0",
     "eslint-plugin-react-hooks": "^7.1.1",

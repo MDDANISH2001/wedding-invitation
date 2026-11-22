@@ -7,6 +7,8 @@ import { CuspFrame } from "../art/frames";
 import { ArtImage } from "../art/ArtImage";
 import { FloralDecoration } from "../art/FloralDecoration";
 import { DecorativeDivider } from "../art/DecorativeDivider";
+import { Medallion } from "../art/mughal";
+import { IS_CLASSIC } from "../../config/env";
 
 function whatsappUrl(number: string, message: string) {
   return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
@@ -49,7 +51,7 @@ export function ClosingInvitation() {
         >
           <h2
             id="dua-heading"
-            className="caps text-sm font-bold text-black/80"
+            className="caps text-sm font-bold text-ink/80"
           >
             {duas.couple.heading}
           </h2>
@@ -147,7 +149,7 @@ export function ClosingInvitation() {
                 href={whatsappUrl(rsvp.whatsappNumber, rsvp.message)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="caps inline-flex min-h-12 items-center gap-2 rounded-full bg-plum-deep px-6 text-sm font-bold text-cream shadow-[0_10px_24px_-12px_rgba(75,0,130,0.9)] transition-colors duration-300 hover:bg-lavender-rich"
+                className="caps inline-flex min-h-12 items-center gap-2 rounded-full bg-btn px-6 text-sm font-bold text-btn-ink shadow-[0_10px_24px_-12px_rgba(75,0,130,0.9)] transition-colors duration-300 hover:bg-btn-hover"
               >
                 <MessageCircle
                   aria-hidden="true"
@@ -159,7 +161,7 @@ export function ClosingInvitation() {
             )}
             <button
               type="button"
-              className="caps inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full border border-plum-deep/50 px-5 text-sm font-bold text-plum-deep transition-colors duration-300 hover:bg-plum-deep hover:text-cream"
+              className="caps inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full border border-plum-deep/50 px-5 text-sm font-bold text-plum-deep transition-colors duration-300 hover:bg-btn hover:text-btn-ink"
               onClick={() =>
                 window.scrollTo({
                   top: 0,
@@ -214,7 +216,7 @@ export function ClosingInvitation() {
           aria-label={compliments.heading}
           {...reveal(0.35)}
         >
-          <p className="caps text-sm font-bold text-black/80">
+          <p className="caps text-sm font-bold text-ink/80">
             {compliments.heading}
           </p>
           <p
@@ -242,7 +244,11 @@ export function ClosingInvitation() {
           className="mt-6 flex flex-col items-center"
           {...reveal(0.4)}
         >
-          <ArtImage name="hands" className="h-auto w-24" />
+          {IS_CLASSIC ? (
+            <ArtImage name="hands" className="h-auto w-24" />
+          ) : (
+            <Medallion className="h-auto w-20" />
+          )}
           <p
             lang="ar"
             dir="rtl"

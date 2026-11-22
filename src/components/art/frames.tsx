@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { ART_SIZES } from '../../assets/art/manifest'
 import { ArtImage } from './ArtImage'
 import { artUrl } from '../../lib/art'
+import { IS_CLASSIC } from '../../config/env'
+import { ArchCard, CuspArch } from './mughal'
 
 const S = ART_SIZES
 // Interior of the arched frame, as fractions of its width.
@@ -21,7 +23,12 @@ interface CardProps {
  * and the bottom florals + lattice band. Height snaps to whole repeats so
  * the border never shows a seam.
  */
-export function InvitationCardFrame({ children, className = '', viewportInset }: CardProps) {
+export function InvitationCardFrame(props: CardProps) {
+  if (!IS_CLASSIC) return <ArchCard {...props} />
+  return <ClassicCardFrame {...props} />
+}
+
+function ClassicCardFrame({ children, className = '', viewportInset }: CardProps) {
   const outer = useRef<HTMLDivElement>(null)
   const inner = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number>()
@@ -74,6 +81,7 @@ export function InvitationCardFrame({ children, className = '', viewportInset }:
 
 /** The cusped floral frame from the design sheet; children sit in its centre. */
 export function CuspFrame({ children, className = '' }: { children: ReactNode; className?: string }) {
+  if (!IS_CLASSIC) return <CuspArch className={className}>{children}</CuspArch>
   return (
     <div className={`relative ${className}`}>
       <ArtImage name="cusp-frame" className="block h-auto w-full" />

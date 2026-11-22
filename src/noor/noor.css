@@ -1,0 +1,195 @@
+/* ──────────────── noor theme (VITE_THEME=noor) ────────────────
+   Everything here moves with transform / opacity only, so the browser's
+   compositor runs it on the GPU; the scenery itself is baked at build
+   time by scripts/noor-art.mjs (no runtime blur, no WebGL). */
+
+.noor-root {
+  --noor-cream: #f6e7c6;
+  --noor-gold: #f1cf85;
+  --noor-gold-deep: #c48d3b;
+  color: var(--noor-cream);
+  font-family: var(--font-serif);
+}
+
+.font-display {
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
+}
+.font-cinzel {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+}
+.font-pinyon {
+  font-family: 'Pinyon Script', 'Great Vibes', cursive;
+}
+.font-ruqaa {
+  font-family: 'Aref Ruqaa', 'Amiri', serif;
+}
+
+/* ── backdrop ─────────────────────────────────────────────────── */
+.noor-bg {
+  position: fixed;
+  inset: -4%;
+  background: #0b0604 url('../assets/noor/bg.webp') center 60% / cover no-repeat;
+  animation: noor-breathe 26s ease-in-out infinite alternate;
+}
+@media (min-aspect-ratio: 1/1) {
+  .noor-bg {
+    background-image: url('../assets/noor/bg-wide.webp');
+    background-position: center;
+  }
+}
+.noor-rays {
+  position: fixed;
+  inset: 0 -10% 20%;
+  background: url('../assets/noor/rays.webp') center top / 100% 100% no-repeat;
+  opacity: 0.7;
+  transform-origin: 42% 0;
+  animation: noor-rays 11s ease-in-out infinite alternate;
+}
+.noor-dust {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -512px;
+  background: url('../assets/noor/dust.webp') 0 0 / 512px repeat;
+  animation: noor-drift 70s linear infinite;
+}
+.noor-dust.near {
+  bottom: -768px;
+  background-size: 768px;
+  opacity: 0.55;
+  animation: noor-drift-near 42s linear infinite;
+}
+.noor-bokeh {
+  position: fixed;
+  border-radius: 50%;
+  background: url('../assets/noor/bokeh.webp') center / contain no-repeat;
+  pointer-events: none;
+}
+.noor-shade {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(90% 55% at 50% 42%, rgba(10, 5, 2, 0.5), transparent 70%);
+}
+
+@keyframes noor-breathe {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to { transform: scale(1.06) translate3d(0, -1.2%, 0); }
+}
+@keyframes noor-rays {
+  0% { opacity: 0.45; transform: rotate(-1.6deg); }
+  100% { opacity: 0.95; transform: rotate(1.6deg); }
+}
+@keyframes noor-drift {
+  to { transform: translate3d(0, -512px, 0); }
+}
+@keyframes noor-drift-near {
+  to { transform: translate3d(0, -768px, 0); }
+}
+
+/* ── raised gold lettering ───────────────────────────────────────
+   Light from above: a bright upper face, a dark bevel line, warm base. */
+.noor-gold {
+  color: #f1cf85;
+  background-image: linear-gradient(180deg, #fff6da 0%, #f8dc98 26%, #d9a24c 48%, #8a5a1c 54%, #e8bd6c 66%, #f9dd9a 82%, #b7802f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* background-clip: text only paints inside the box, and script swashes /
+     Arabic marks reach outside it: grow the painted box, cancel it in layout */
+  padding: 0.3em 0.4em;
+  margin: -0.3em -0.4em;
+}
+.noor-emboss {
+  /* one hard edge only: a wide glow blur would cost every animated frame */
+  filter: drop-shadow(0 1.5px 0 rgba(45, 22, 4, 0.95));
+}
+.noor-soft {
+  color: var(--noor-cream);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 16px rgba(0, 0, 0, 0.55);
+}
+
+/* the tap-to-begin light */
+.noor-orb {
+  animation: noor-orb 3.2s ease-in-out infinite;
+}
+@keyframes noor-orb {
+  0%, 100% { transform: scale(0.92); opacity: 0.75; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+/* panels on the details screen: no backdrop-filter (too heavy for phones) */
+.noor-panel {
+  background: linear-gradient(180deg, rgba(28, 15, 7, 0.86), rgba(16, 8, 4, 0.9));
+  border: 1px solid rgba(241, 207, 133, 0.38);
+  box-shadow: inset 0 0 0 4px rgba(16, 8, 4, 0.9), inset 0 0 0 5px rgba(241, 207, 133, 0.22), 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+}
+.noor-btn {
+  background: linear-gradient(180deg, #f6d891, #c48d3b);
+  color: #23130a;
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.noor-btn-ghost {
+  border: 1px solid rgba(241, 207, 133, 0.55);
+  color: #f6e7c6;
+}
+
+/* the pick-one sheet for directions / call (a native <dialog>: focus + Esc for free) */
+.noor-sheet {
+  max-height: 80dvh;
+}
+.noor-sheet::backdrop {
+  background: rgba(5, 2, 1, 0.62);
+}
+.noor-sheet[open] {
+  animation: noor-sheet-in 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes noor-sheet-in {
+  from { transform: translateY(100%); }
+}
+
+/* a soft dark pool behind lines that sit over bright artwork */
+.noor-namebed::before {
+  content: '';
+  position: absolute;
+  inset: -6% -14%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(10, 5, 2, 0.72), rgba(10, 5, 2, 0.4) 60%, transparent);
+  pointer-events: none;
+}
+/* a brighter gold for the couple's names */
+.noor-bright .noor-gold {
+  background-image: linear-gradient(180deg, #fffaf0 0%, #ffe6a8 28%, #f0bd62 50%, #a86f24 56%, #f6d083 68%, #fff0c4 84%, #d09a45 100%);
+}
+
+/* the star by the crescent twinkles */
+.noor-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: noor-twinkle 2.8s ease-in-out infinite;
+}
+@keyframes noor-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(0.82) rotate(8deg); opacity: 0.75; }
+}
+
+/* the floating buttons drift gently up and down */
+.noor-bob {
+  animation: noor-bob 3.4s ease-in-out infinite;
+}
+@keyframes noor-bob {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -7px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noor-bg,
+  .noor-rays,
+  .noor-dust,
+  .noor-orb,
+  .noor-bob,
+  .noor-twinkle {
+    animation: none;
+  }
+}

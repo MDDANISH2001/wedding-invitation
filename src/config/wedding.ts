@@ -40,6 +40,8 @@ export interface WeddingEvent {
   /** Show the directions button even before mapsUrl is set ("link coming soon"). */
   showDirections: boolean;
   ornament: "lantern" | "floral";
+  /** Hijri date shown by the noor theme, e.g. "25 Jumada al-Akhirah 1448". Empty hides it. */
+  hijri: string;
 }
 
 export interface Person {
@@ -60,7 +62,7 @@ export interface RsvpContact {
 /**
  * The two invitation views, picked by the link's query string:
  *   https://…/                   → both events (Baraat & Nikah + Walima)
- *   https://…/?invite=walima     → Walima only   (also ?view=walima or ?walima)
+ *   https://…/walima             → Walima only   (also ?invite=walima, ?view=walima or ?walima)
  */
 export type InviteView = "all" | "walima";
 
@@ -120,12 +122,14 @@ const content = {
         { label: "Departure of Baraat", time: "7:00 PM" },
         { label: "Nikah", time: "9:00 PM" },
       ],
-      venueName: "Venue to be announced",
-      venueAddress: "",
+      venueName: "Saifi Marriage Home",
+      venueAddress: "Khanna Nagar, Main Delhi–Saharanpur Road, Loni",
       // TODO: paste the Google Maps link here when the location is final
       mapsUrl: "",
       showDirections: true,
       ornament: "lantern",
+      // Umm al-Qura date; adjust by a day if the local moon sighting differs
+      hijri: "25 Jumada al-Akhirah 1448",
     },
     {
       id: "walima",
@@ -133,14 +137,15 @@ const content = {
       shortTitle: "Walima",
       titleUrdu: "دعوتِ ولیمہ",
       subtitle: "Reception",
-      start: "2026-12-06T19:00:00+05:30",
-      schedule: [{ label: "Dinner", time: "To be announced" }],
-      venueName: "254-B/184, Gali No. 1/1, D-Block",
-      venueAddress: "Shoaib Enclave, Prem Nagar, Loni, Ghaziabad",
+      start: "2026-12-06T13:00:00+05:30",
+      schedule: [{ label: "Lunch", time: "1:00 PM" }],
+      venueName: "Hina Marriage Home",
+      venueAddress: "52-Peer, Prem Nagar, Loni",
       // TODO: paste the Google Maps link here
       mapsUrl: "",
       showDirections: true,
       ornament: "floral",
+      hijri: "26 Jumada al-Akhirah 1448",
     },
   ] satisfies WeddingEvent[],
 
@@ -200,7 +205,64 @@ const content = {
   /** A little one's invitation, written the way a toddler says it. Empty text hides it. */
   childNote: {
     text: "Mele Mamu ki chhadi me jalool jalool aana!",
-    from: "— Mamu's little one",
+    from: "— Arham Khan",
+  },
+
+  /** Words on the envelope (3D envelope; the label follows the view). */
+  envelope: {
+    label: "Nikah & Walima",
+    labelWalima: "Dawat-e-Walima",
+    urdu: "دعوت نامہ",
+    hint: "Tap the seal to open",
+    /** Shown above the guest's name when the link has ?to=Name */
+    guestPrefix: "Specially for",
+    /** On the card, before the hosts' line, when the link has ?to=Name */
+    greeting: "Dear",
+  },
+
+  /**
+   * Recited duas that can play after the envelope opens (VITE_DUA in .env).
+   * Recitation: Mishary Rashid Alafasy, via everyayah.com (public/audio/).
+   */
+  recitations: {
+    rabbirhamhuma: {
+      arabic: "رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِيْ صَغِيْرًا",
+      latin: "Rabbir-hamhuma kama rabbayani saghira",
+      meaning:
+        "My Lord, have mercy upon them as they raised me when I was small.",
+      source: "Surah Al-Isra · 17:24",
+      file: "audio/rabbirhamhuma.mp3",
+    },
+    "rabbana-hablana": {
+      arabic:
+        "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَّاجْعَلْنَا لِلْمُتَّقِيْنَ إِمَامًا",
+      latin:
+        "Rabbana hab lana min azwajina wa dhurriyyatina qurrata a'yunin waj'alna lil-muttaqina imama",
+      meaning:
+        "Our Lord, grant us from our spouses and children the coolness of our eyes, and make us leaders of the righteous.",
+      source: "Surah Al-Furqan · 25:74",
+      file: "audio/rabbana-hablana.mp3",
+    },
+  },
+
+  /** Words used only by the noor theme's self-playing sequence (VITE_THEME=noor). */
+  noor: {
+    salaam: {
+      arabic: "اَلسَّلَامُ عَلَيْكُمْ",
+      latin: "Assalamu Alaikum",
+      line: "With grateful hearts, we share a joyful news",
+    },
+    blessing: "By the grace and mercy of Allah",
+    ayah: {
+      arabic: "وَخَلَقْنَاكُمْ أَزْوَاجًا",
+      meaning: "And We created you in pairs",
+      source: "Surah An-Naba · 78:8",
+    },
+    saveTheDate: "Save the Date",
+    begin: "Tap to begin",
+    skip: "Skip",
+    replay: "Watch again",
+    details: "Details & RSVP",
   },
 
   closing: {
@@ -232,7 +294,7 @@ const VIEWS = {
     programmeIntro: "We would be honoured by your presence at the Walima.",
     countdown: {
       ...content.countdown,
-      target: "2026-12-06T19:00:00+05:30",
+      target: "2026-12-06T13:00:00+05:30",
       label: "the Walima",
     },
     rsvpMessage:
@@ -242,6 +304,8 @@ const VIEWS = {
 
 function readView(): InviteView {
   if (typeof window === "undefined") return "all";
+  // https://…/walima has its own page (and its own WhatsApp thumbnail)
+  if (/^\/(walima|valima)\/?$/i.test(window.location.pathname)) return "walima";
   const q = new URLSearchParams(window.location.search);
   const v = (q.get("invite") ?? q.get("view") ?? "").toLowerCase();
   return v === "walima" || v === "valima" || q.has("walima") || q.has("valima")
@@ -263,6 +327,21 @@ export const wedding = {
   countdown: view.countdown,
   rsvp: { ...content.rsvp, message: view.rsvpMessage },
 };
+
+/**
+ * The guest's name from the link, e.g. …/?to=Rahman%20Family → "Rahman Family".
+ * Plain text only, max 40 characters. Empty when absent.
+ */
+export const GUEST: string = (() => {
+  if (typeof window === "undefined") return "";
+  const q = new URLSearchParams(window.location.search);
+  const raw = q.get("to") ?? q.get("guest") ?? "";
+  return raw
+    .replace(/[^\p{L}\p{M}\p{N} .,'&-]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 40);
+})();
 
 /** Timezone used to render event dates (matches the offsets above). */
 export const WEDDING_TIMEZONE = "Asia/Kolkata";

@@ -1,5 +1,6 @@
 import { useId, type ReactNode } from 'react'
 import { m as motion, useReducedMotion } from 'motion/react'
+import { PALETTE } from '../../theme/palette'
 
 interface Props {
   /** Which of the five ornaments (shapes follow the design sheet). */
@@ -12,7 +13,7 @@ interface Props {
   priority?: boolean
 }
 
-const INK = '#4b0082'
+const INK = PALETTE.ink
 const W = 260
 const C = W / 2
 
@@ -150,9 +151,9 @@ export function DecorativeDivider({ variant = 1, className = '', animate = true,
     <svg viewBox={`0 0 ${W} 40`} className="block h-auto w-full overflow-visible" aria-hidden="true">
       <defs>
         <linearGradient id={`g${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e9c46a" />
-          <stop offset="0.55" stopColor="#b8860b" />
-          <stop offset="1" stopColor="#7a5300" />
+          <stop offset="0" stopColor={PALETTE.gold[2]} />
+          <stop offset="0.55" stopColor={PALETTE.gold[1]} />
+          <stop offset="1" stopColor={PALETTE.gold[0]} />
         </linearGradient>
       </defs>
       <Ornament variant={variant} gold={gold} />
