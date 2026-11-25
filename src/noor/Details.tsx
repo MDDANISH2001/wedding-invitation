@@ -1,6 +1,7 @@
 import { m as motion } from "motion/react";
 import {
   CalendarPlus,
+  Heart,
   MapPin,
   MessageCircle,
   Phone,
@@ -254,10 +255,25 @@ export function Details({ onReplay }: { onReplay: () => void }) {
         <p className="font-cinzel mt-3 text-balance text-[12.5px] font-semibold tracking-[0.2em] uppercase">
           {noor.blessing}
         </p>
-        <p className="font-display noor-emboss mt-2 flex flex-col text-[clamp(26px,7vw,34px)] font-bold">
-          <span className="noor-gold">{wedding.hosts.names}</span>
-          <span className="white text-sm">{wedding.hosts.father}</span>
-        </p>
+        <div className="mt-2 flex flex-col items-center">
+          {wedding.hosts.parents.map((p, i) => (
+            <div key={p.name} className="flex flex-col items-center">
+              {i > 0 && (
+                <span className="noor-emboss my-0.5 text-[28px] italic leading-none">
+                  <span className="noor-gold">&amp;</span>
+                </span>
+              )}
+              <span className="font-display noor-emboss text-[clamp(26px,7vw,34px)] font-bold leading-tight">
+                <span className="noor-gold">{p.name}</span>
+              </span>
+              {p.line && (
+                <span className="text-[15px] italic leading-snug text-[#f6e7c6]/80">
+                  {p.line}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
         <p className="mt-2 max-w-[22em] text-[18px] italic leading-snug">
           {wedding.hosts.request}
         </p>
@@ -350,12 +366,19 @@ export function Details({ onReplay }: { onReplay: () => void }) {
       )}
 
       {childNote.text && (
-        <Rise className="mx-auto max-w-[22em]">
-          <p className="font-child text-[22px] leading-snug text-[#fff1cc]">
-            “{childNote.text}”
+        // the little one's note: a gold-edged card with a heart coin on top
+        <Rise className="noor-venue noor-note relative mx-auto mt-4 w-full max-w-[22em] rounded-[24px] px-5 pt-9 pb-6">
+          <span className="noor-pin absolute top-0 left-1/2 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full">
+            <Heart size={19} strokeWidth={2.3} fill="currentColor" />
+          </span>
+          <p className="font-child relative text-[25px] leading-snug text-[#fff6dc]">
+            <span aria-hidden="true" className="noor-gold font-display mr-0.5 align-[-0.25em] text-[44px] leading-none">“</span>
+            {childNote.text}
+            <span aria-hidden="true" className="noor-gold font-display ml-0.5 align-[-0.25em] text-[44px] leading-none">”</span>
           </p>
-          <p className="font-child mt-1 text-2xl uppercase! text-[#f8dc98]">
-            {childNote.from}
+          <span aria-hidden="true" className="mx-auto mt-3 block h-px w-24 bg-gradient-to-r from-transparent via-[#f1cf85] to-transparent" />
+          <p className="font-child noor-emboss mt-2 text-[30px] uppercase">
+            <span className="noor-gold">{childNote.from}</span>
           </p>
         </Rise>
       )}

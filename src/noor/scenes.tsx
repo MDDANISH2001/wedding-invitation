@@ -93,15 +93,35 @@ export function buildScenes(): Scene[] {
             at={0}
             className="font-cinzel mx-auto max-w-[24em] text-balance text-[12.5px] font-semibold tracking-[0.2em] uppercase"
           />
-          <GoldLine
-            text={hosts.names}
-            at={0.6}
-            stagger={0.06}
-            className="font-display mt-4 text-[clamp(32px,9vw,50px)] font-bold leading-tight"
-          />
+          <div className="mt-4 flex flex-col items-center">
+            {hosts.parents.map((p, i) => (
+              <div key={p.name} className="flex flex-col items-center">
+                {i > 0 && (
+                  <FadeLine
+                    text="&"
+                    at={0.6 + i * 1.1 - 0.3}
+                    className="my-0.5 text-[clamp(28px,7.4vw,34px)] italic leading-none text-[#f8dc98]"
+                  />
+                )}
+                <GoldLine
+                  text={p.name}
+                  at={0.6 + i * 1.1}
+                  stagger={0.06}
+                  className="font-display text-[clamp(32px,9vw,50px)] font-bold leading-tight"
+                />
+                {p.line && (
+                  <FadeLine
+                    text={p.line}
+                    at={0.6 + i * 1.1 + 0.6}
+                    className="text-[clamp(15px,4vw,17px)] italic leading-snug opacity-80"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
           <FadeLine
             text={hosts.request}
-            at={1.9}
+            at={0.6 + hosts.parents.length * 1.1 + 0.2}
             stagger={0.05}
             className="mx-auto mt-4 max-w-[19em] text-[clamp(19px,5vw,23px)] italic leading-snug"
           />

@@ -74,8 +74,18 @@ const content = {
   },
 
   hosts: {
-    names: "MD Mynuddin",
-    father: "S/o Marhoom Shabir Ahamad",
+    /**
+     * The groom's parents, in order. Each has a name (in gold) and an
+     * optional small line under it (e.g. "S/o …"); leave the line "" for none.
+     */
+    parents: [
+      { name: "MD Mynuddin", line: "S/o Marhoom Shabir Ahamad" },
+      { name: "Hina", line: "" },
+    ],
+    /** All the parents' names on one line, for the other themes' card. */
+    get names(): string {
+      return this.parents.map((p) => p.name).join(" & ");
+    },
     request:
       "request the honour of your presence and blessings on the auspicious occasion of the Nikah of their beloved son",
   },
@@ -85,7 +95,7 @@ const content = {
     honorific: "Noor-e-Chashm",
     honorificUrdu: "نورِ چشم",
     lines: [
-      "Son of *MD Mynuddin alias Mynuddin*",
+      "Son of *MD Mynuddin alias Mynuddin* & *Hina*",
       "Grandson of Late *Shabir Ahamad*, Tyodhi wale",
     ],
   } satisfies Person,
@@ -191,8 +201,8 @@ const content = {
     heading: "R.S.V.P.",
     /** Shown as written; a tap dials the number. Add names when you have them. */
     contacts: [
-      { name: "", phone: "+91 78385 69272" },
-      { name: "", phone: "+91 83681 39660" },
+      { name: "Danish", phone: "+91 78385 69272" },
+      { name: "Mynuddin", phone: "+91 83681 39660" },
     ] as RsvpContact[],
     /** WhatsApp RSVP button; hidden until set. International digits, e.g. "919876543210". */
     whatsappNumber: "",
