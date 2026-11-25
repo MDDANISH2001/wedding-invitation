@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { MapPin, Phone, X } from "lucide-react";
+import { ArrowUpRight, MapPin, Phone, X } from "lucide-react";
 import { useRef, useState, type ReactNode } from "react";
 import { wedding } from "../config/wedding";
 import { haptic } from "../lib/haptics";
@@ -84,9 +84,16 @@ export function FloatingActions() {
             events.map((ev) => (
               <li key={ev.id}>
                 {ev.mapsUrl ? (
-                  <a href={ev.mapsUrl} target="_blank" rel="noreferrer" onClick={close} className="noor-btn-ghost flex min-h-14 items-center gap-3 rounded-2xl px-4 py-2.5">
-                    <MapPin size={18} className="shrink-0 text-[#f1cf85]" />
-                    <Option title={ev.title} sub={ev.venueName} />
+                  <a href={ev.mapsUrl} target="_blank" rel="noreferrer" onClick={close} className="noor-option flex min-h-16 items-center gap-3.5 rounded-2xl px-3.5 py-3">
+                    <span className="noor-pin grid h-10 w-10 shrink-0 place-items-center rounded-full">
+                      <MapPin size={19} strokeWidth={2.3} />
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col text-left leading-snug">
+                      <span className="font-cinzel text-[12px] font-semibold tracking-[0.2em] uppercase text-[#f6e7c6]/75">{ev.title}</span>
+                      <span className="noor-gold font-cinzel mt-0.5 text-[17px] font-bold">{ev.venueName}</span>
+                      {ev.venueAddress && <span className="mt-0.5 text-[15px] italic text-[#fbeed0]/90">{ev.venueAddress}</span>}
+                    </span>
+                    <ArrowUpRight size={20} className="shrink-0 text-[#f1cf85]" />
                   </a>
                 ) : (
                   <div className="noor-btn-ghost flex min-h-14 items-center gap-3 rounded-2xl px-4 py-2.5 opacity-60" aria-disabled="true">

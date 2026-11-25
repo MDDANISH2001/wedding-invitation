@@ -65,6 +65,42 @@ function Heading({ children, urdu }: { children: ReactNode; urdu?: string }) {
   );
 }
 
+/** The venue on a framed gold plate: the pin, the hall in raised gold, the address under it. */
+function VenuePlate({ ev }: { ev: WeddingEvent }) {
+  const body = (
+    <>
+      <span className="noor-pin mx-auto -mt-[34px] mb-2 grid h-11 w-11 place-items-center rounded-full">
+        <MapPin size={20} strokeWidth={2.3} />
+      </span>
+      <span className="font-cinzel block text-[11px] font-semibold tracking-[0.34em] uppercase text-[#f6e7c6]/75">
+        Venue
+      </span>
+      <span className="font-cinzel noor-emboss mt-1 block text-[21px] font-bold leading-snug">
+        <span className="noor-gold">{ev.venueName}</span>
+      </span>
+      {ev.venueAddress && (
+        <span className="mt-1 block text-[17px] italic leading-snug text-[#fbeed0]">
+          {ev.venueAddress}
+        </span>
+      )}
+    </>
+  );
+  return ev.mapsUrl ? (
+    <a
+      href={ev.mapsUrl}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`${ev.venueName}, ${ev.venueAddress}: open in maps`}
+      onClick={() => haptic(8)}
+      className="noor-venue mt-9 block rounded-2xl px-4 pt-4 pb-4"
+    >
+      {body}
+    </a>
+  ) : (
+    <div className="noor-venue mt-9 rounded-2xl px-4 pt-4 pb-4">{body}</div>
+  );
+}
+
 function EventPanel({ ev }: { ev: WeddingEvent }) {
   const d = dateParts(ev.start);
   return (
@@ -99,29 +135,17 @@ function EventPanel({ ev }: { ev: WeddingEvent }) {
           </li>
         ))}
       </ul>
-      <div className="mt-5">
-        <p className="font-cinzel text-[11.5px] font-semibold tracking-[0.3em] uppercase text-[#f6e7c6]/75">
-          Venue
-        </p>
-        <p className="mt-1 text-[19px] font-semibold leading-snug">
-          {ev.venueName}
-        </p>
-        {ev.venueAddress && (
-          <p className="text-[17px] italic leading-snug text-[#f6e7c6]/85">
-            {ev.venueAddress}
-          </p>
-        )}
-      </div>
+      <VenuePlate ev={ev} />
       <div className="mt-6 flex flex-wrap justify-center gap-2.5">
         {ev.mapsUrl ? (
           <a
             href={ev.mapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="noor-btn inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[15px] font-bold"
+            className="noor-btn noor-shine inline-flex min-h-12 items-center gap-2 rounded-full px-6 font-cinzel text-[14px] font-bold tracking-[0.12em] uppercase"
             onClick={() => haptic(8)}
           >
-            <MapPin size={17} /> Get directions
+            <MapPin size={18} strokeWidth={2.4} /> Get directions
           </a>
         ) : (
           ev.showDirections && (

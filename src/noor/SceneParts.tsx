@@ -1,6 +1,7 @@
 import type { Person, WeddingEvent } from "../config/wedding";
 import { dateParts } from "../lib/date";
 import { m as motion } from "motion/react";
+import { MapPin } from "lucide-react";
 import tajWindow from "../assets/noor/taj-window.webp";
 import { Appear, FadeLine, GoldLine, ScriptLine } from "./text";
 
@@ -90,15 +91,18 @@ export function EventScene({ ev }: { ev: WeddingEvent }) {
           </div>
         ))}
       </Appear>
-      <Appear at={3.1} className="mt-6">
-        <p className="font-cinzel noor-soft text-[12px] font-semibold tracking-[0.3em] uppercase opacity-80">
+      <Appear at={3.1} className="noor-venue mx-auto mt-10 w-[min(88vw,400px)] rounded-2xl px-4 pt-4 pb-4">
+        <span aria-hidden="true" className="noor-pin mx-auto -mt-[34px] mb-2 grid h-11 w-11 place-items-center rounded-full">
+          <MapPin size={20} strokeWidth={2.3} />
+        </span>
+        <p className="font-cinzel text-[11px] font-semibold tracking-[0.34em] uppercase text-[#f6e7c6]/75">
           Venue
         </p>
-        <p className="noor-soft mt-1 text-[clamp(18px,4.8vw,22px)] font-semibold leading-snug">
-          {ev.venueName}
+        <p className="font-cinzel noor-emboss mt-1 text-[clamp(19px,5.2vw,23px)] font-bold leading-snug">
+          <span className="noor-gold">{ev.venueName}</span>
         </p>
         {ev.venueAddress && (
-          <p className="noor-soft text-[clamp(16px,4.3vw,19px)] italic leading-snug">
+          <p className="noor-soft mt-1 text-[clamp(16px,4.3vw,19px)] italic leading-snug">
             {ev.venueAddress}
           </p>
         )}
