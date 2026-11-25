@@ -113,7 +113,7 @@ export function buildScenes(): Scene[] {
                   <FadeLine
                     text={p.line}
                     at={0.6 + i * 1.1 + 0.6}
-                    className="text-[clamp(15px,4vw,17px)] italic leading-snug opacity-80"
+                    className="text-[clamp(16px,5vw,20px)] italic leading-snug opacity-80"
                   />
                 )}
               </div>

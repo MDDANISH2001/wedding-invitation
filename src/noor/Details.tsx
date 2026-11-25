@@ -267,7 +267,7 @@ export function Details({ onReplay }: { onReplay: () => void }) {
                 <span className="noor-gold">{p.name}</span>
               </span>
               {p.line && (
-                <span className="text-[15px] italic leading-snug text-[#f6e7c6]/80">
+                <span className="text-[clamp(16px,5vw,20px)] italic leading-snug text-[#f6e7c6]/80">
                   {p.line}
                 </span>
               )}
